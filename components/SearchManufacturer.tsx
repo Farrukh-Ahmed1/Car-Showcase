@@ -1,13 +1,12 @@
-"use client";
-import Image from 'next/image';
-import { Fragment,useState } from 'react';
-import { Combobox,Transition } from '@headlessui/react';
-import { manufacturers } from '@/constants';
-import { SearchManufacturerProps } from '@/types';
+import Image from "next/image";
+import { Fragment, useState } from "react";
+import { Combobox, Transition } from "@headlessui/react";
+import { manufacturers } from "@/constants";
+import { SearchManufacturerProps } from "@/types";
 
 
-const SearchManufacturer = ({selected,setSelected}: SearchManufacturerProps) => {
-    const [query, setQuery] = useState("");
+const SearchManufacturer = ({ manufacturer, setManuFacturer }: SearchManufacturerProps) => {
+  const [query, setQuery] = useState("");
 
   const filteredManufacturers =
     query === ""
@@ -18,9 +17,10 @@ const SearchManufacturer = ({selected,setSelected}: SearchManufacturerProps) => 
             .replace(/\s+/g, "")
             .includes(query.toLowerCase().replace(/\s+/g, ""))
         );
+
   return (
     <div className='search-manufacturer'>
-      <Combobox value={selected} onChange={setSelected}>
+      <Combobox value={manufacturer} onChange={setManuFacturer}>
         <div className='relative w-full'>
           {/* Button for the combobox. Click on the icon to see the complete dropdown */}
           <Combobox.Button className='absolute top-[14px]'>
@@ -38,7 +38,7 @@ const SearchManufacturer = ({selected,setSelected}: SearchManufacturerProps) => 
             className='search-manufacturer__input'
             displayValue={(item: string) => item}
             onChange={(event) => setQuery(event.target.value)} // Update the search query when the input changes
-            placeholder='Audi...'
+            placeholder='Volkswagen...'
           />
 
           {/* Transition for displaying the options */}
@@ -50,8 +50,7 @@ const SearchManufacturer = ({selected,setSelected}: SearchManufacturerProps) => 
             afterLeave={() => setQuery("")} // Reset the search query after the transition completes
           >
             <Combobox.Options
-              className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 
-              text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
+              className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
               static
             >
               {filteredManufacturers.length === 0 && query !== "" ? (
@@ -80,8 +79,8 @@ const SearchManufacturer = ({selected,setSelected}: SearchManufacturerProps) => 
 
                         {/* Show an active blue background color if the option is selected */}
                         {selected ? (
-                          <span className={`absolute inset-y-0 left-0 flex items-center pl-3 
-                          ${active? "text-white": "text-pribg-primary-purple"}`}></span>
+                          <span className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active? "text-white": "text-pribg-primary-purple"}`}
+                          ></span>
                         ) : null}
                       </>
                     )}
@@ -93,8 +92,7 @@ const SearchManufacturer = ({selected,setSelected}: SearchManufacturerProps) => 
         </div>
       </Combobox>
     </div>
+  );
+};
 
-  )
-}
-
-export default SearchManufacturer
+export default SearchManufacturer;
